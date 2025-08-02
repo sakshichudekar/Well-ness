@@ -1,73 +1,99 @@
-# Welcome to your Lovable project
+mindful-maker-app-main/
+├── backend/
+│   ├── server.js
+│   ├── routes/
+│   ├── models/
+│   ├── controllers/
+│   └── .env
+└── frontend/
+    └── src/
+        ├── lib/
+        │   └── api.ts   ← Axios instance here
+        ├── pages/
+        │   ├── Login.tsx
+        │   ├── Register.tsx
+        │   └── ...
+1. Setup Backend
+Go to the backend folder:
 
-## Project info
+bash
+Copy
+Edit
+cd backend
+Create a .env file:
 
-**URL**: https://lovable.dev/projects/db2c12de-4123-4988-933a-9ad1be8dc132
+env
+Copy
+Edit
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/arvyax
+JWT_SECRET=your-secret-key
+Install dependencies:
 
-## How can I edit this code?
+bash
+Copy
+Edit
+npm install
+Run the server:
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/db2c12de-4123-4988-933a-9ad1be8dc132) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+bash
+Copy
+Edit
 npm run dev
-```
+✅ You should see:
 
-**Edit a file directly in GitHub**
+arduino
+Copy
+Edit
+Server running on port 5000
+MongoDB connected
+💻 2. Setup Frontend
+Go to the frontend folder:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+bash
+Copy
+Edit
+cd ../frontend
+Create the Axios API service in src/lib/api.ts:
 
-**Use GitHub Codespaces**
+ts
+Copy
+Edit
+// src/lib/api.ts
+import axios from "axios";
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+export const apiService = axios.create({
+  baseURL: "http://localhost:5000",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+Make sure all API calls use this apiService. Example (in Login.tsx):
 
-## What technologies are used for this project?
+ts
+Copy
+Edit
+import { apiService } from "@/lib/api";
 
-This project is built with:
+const response = await apiService.post("/auth/login", { email, password });
+Install dependencies:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+bash
+Copy
+Edit
+npm install
+Start the React frontend:
 
-## How can I deploy this project?
+bash
+Copy
+Edit
+npm run dev
+🧪 3. Test User Flow
+Signup on the frontend → should send request to POST /auth/register
 
-Simply open [Lovable](https://lovable.dev/projects/db2c12de-4123-4988-933a-9ad1be8dc132) and click on Share -> Publish.
+Login → POST /auth/login
 
-## Can I connect a custom domain to my Lovable project?
+Token should be stored in localStorage or cookies
 
-Yes, you can!
+All authenticated requests (e.g., /my-sessions) should include the token in headers.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
