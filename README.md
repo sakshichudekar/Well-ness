@@ -1,3 +1,6 @@
+# Well-ness App
+
+This is my wellness tracker app. More details coming soon!
 mindful-maker-app-main/
 ├── backend/
 │   ├── server.js
@@ -97,3 +100,6 @@ Token should be stored in localStorage or cookies
 
 All authenticated requests (e.g., /my-sessions) should include the token in headers.
 
+=======
+
+>>>>>>> 18fbeacaa57e88b7e8ec27a8fba3fc49624fe09d
